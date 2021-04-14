@@ -14,7 +14,6 @@ def differential(graph, loop):
     # Return the appropriate derviative to be processed in taylor
     return graph
 
-
 def taylor(graph, arr, start, n):
     total = 0
    
@@ -24,14 +23,15 @@ def taylor(graph, arr, start, n):
         total = np.add(total, (f(start) * (arr - start)**i / math.factorial(i))) 
     return total
 
-arr = np.linspace(0, 4*math.pi, 100) 
+# arr = np.linspace(0, 4*math.pi, 100) 
 
 
-#tay = taylor(sym.sin(2*x), arr, 0, 5)
-#Inserting the original graph
-#y = sym.lambdify(x, sym.sin(2*x))
-#plt.plot(arr, y(arr))
-#plt.plot(arr, tay)
-#plt.ylim([-10, 10])
-#plt.show()
-
+# tay = taylor(sym.sin(2*x**2), arr, 0, 10)
+# # Inserting the original graph
+# y = sym.lambdify(x, sym.sin(2*x**2))
+# plt.plot(arr, y(arr))
+# plt.plot(arr, tay)
+# plt.ylim([-10, 10])
+# plt.show()
+# print(y)
+# print(y(arr))
