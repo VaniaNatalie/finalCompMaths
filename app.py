@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.ttk import Combobox
+from tkinter import messagebox
 
 import finalProj
 
@@ -26,6 +27,7 @@ trigonometry = None
 power = 0
 start = 0
 n = 0
+button_pressed = False
 
 def setup_label():
     label1 = Label(root, text='Taylor Series Generator')
@@ -60,22 +62,26 @@ def get_input():
     global power
     global start
     global n
+    global button_pressed
 
-    coefficient = int(coefficient_input.get())
-    trigonometry = str(combo_box.get())
-    power = int(power_input.get())
-    start = int(start_input.get())
-    n = int(n_input.get())
+    if len(coefficient_input.get() and power_input.get() and start_input.get() and n_input.get()) == 0:
+        messagebox.showwarning("Warning", "Fill in all the required data!")
+    else: 
+        coefficient = int(coefficient_input.get())
+        trigonometry = str(combo_box.get())
+        power = int(power_input.get())
+        start = int(start_input.get())
+        n = int(n_input.get())
+        button_pressed = True
 
-    if power == 1:
-        my_label = Label(root, text="f(x) = " + trigonometry + "(" + str(coefficient) + "x" + ")"
-        , font=('Arial', 12, "bold"))
-        canvas.create_window(400, 200, window=my_label)
-    else:
-        my_label = Label(root, text="f(x) = " + trigonometry + "(" + str(coefficient) + "*x**" + str(power) + ")"
-        , font=('Arial', 12, "bold"))
-        canvas.create_window(400, 200, window=my_label)
-        
+        if power == 1:
+            my_label = Label(root, text="f(x) = " + trigonometry + "(" + str(coefficient) + "x" + ")"
+                            , font=('Arial', 12, "bold"))
+            canvas.create_window(400, 200, window=my_label)
+        else:
+            my_label = Label(root, text="f(x) = " + trigonometry + "(" + str(coefficient) + "*x**" + str(power) + ")"
+                            , font=('Arial', 12, "bold"))
+            canvas.create_window(400, 200, window=my_label)       
 
 def check_taylor(coef, trigo, power):
     global x
@@ -120,6 +126,13 @@ def plot_taylor(tay, arr, start, n):
     graph = FigureCanvasTkAgg(fig, root) 
     graph.get_tk_widget().pack(fill=BOTH, expand=0)
 
+def show_graph():
+    if button_pressed == True:    
+        check_taylor(coefficient, trigonometry, power)
+        plot_taylor(check_taylor(coefficient, trigonometry, power), arr, start, n)
+    else:
+        messagebox.showinfo("Info", "Pressed submit button first!")
+
 def clear_all():
     my_label.destroy()
     coefficient_input.delete(0, END)
@@ -150,15 +163,13 @@ canvas.create_window(400, 170, window=n_input)
 button1 = Button(root, text="  Submit  ", command=get_input, bg='#ff996e', fg='white', font=('Arial', 11, 'bold'), activebackground="#ffd97a")
 canvas.create_window(400, 240, window=button1)
 
-button2 = Button(root, text="  Show Graph  ", command=lambda:[check_taylor(coefficient, trigonometry, power),
-                    plot_taylor(check_taylor(coefficient, trigonometry, power), arr, start, n)], 
+button2 = Button(root, text="  Show Graph  ", command=show_graph, 
                     bg='#b280f2', font=('Arial', 11, 'bold'), fg='white', activebackground="#f071a3"
                 )
 canvas.create_window(400, 280, window=button2)
 
 button3 = Button(root, text="  Clear Graph  ", command=clear_all, bg='#6d71ed', font=('Arial', 11, 'bold'), fg='white', activebackground="#5ed6ba")
 canvas.create_window(400, 320, window=button3)
-
 
 setup_label()
 root.title("Taylor Series")
