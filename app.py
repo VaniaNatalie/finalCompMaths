@@ -93,11 +93,11 @@ def check_taylor(coef, trigo, power):
     elif(trigo == "tan"):
         tay = sym.tan(coef*x**power)
     elif(trigo == "cosec"):
-        tay = sym.csc(coef*x**power)
+        tay = 1/sym.sin(coef*x**power)
     elif(trigo == "sec"):
-        tay = sym.sec(coef*x**power)
+        tay = 1/sym.cos(coef*x**power)
     elif(trigo == "cot"):
-        tay = sym.cot(coef*x**power)
+        tay = 1/sym.tan(coef*x**power)
     elif(trigo == "arcsin"):
         tay = sym.asin(coef*x**power) 
     elif(trigo == "arccos"):
