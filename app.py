@@ -16,7 +16,7 @@ import sympy as sym
 plt.style.use('ggplot')
 
 x = sym.Symbol('x')
-arr = np.linspace(0, 4*math.pi, 100)
+arr = np.linspace(-2*math.pi, 2*math.pi, 100)
 
 root = Tk()
 canvas = Canvas(root, width = 800, height = 400)
@@ -74,14 +74,19 @@ def get_input():
         n = int(n_input.get())
         button_pressed = True
 
+        if (coefficient <= 0 or power <= 0):
+            messagebox.showwarning("Warning", "Coefficient and power should be bigger than 0!")
         if power == 1:
             my_label = Label(root, text="f(x) = " + trigonometry + "(" + str(coefficient) + "x" + ")"
                             , font=('Arial', 12, "bold"))
+            my_label.pack()
             canvas.create_window(400, 200, window=my_label)
         else:
             my_label = Label(root, text="f(x) = " + trigonometry + "(" + str(coefficient) + "*x**" + str(power) + ")"
                             , font=('Arial', 12, "bold"))
-            canvas.create_window(400, 200, window=my_label)       
+            my_label.pack()
+            canvas.create_window(400, 200, window=my_label)
+
 
 def check_taylor(coef, trigo, power):
     global x
@@ -121,7 +126,7 @@ def plot_taylor(tay, arr, start, n):
         ax.set_title(f"f(x) = {trigonometry}({coefficient}$x^{power}$)")
     ax.plot(arr, y(arr), label="Original")
     ax.plot(arr, tayl, label="Taylor")
-    ax.set_ylim([-10,10])
+    ax.set_ylim([-2,2])
 
     graph = FigureCanvasTkAgg(fig, root) 
     graph.get_tk_widget().pack(fill=BOTH, expand=0)
@@ -134,12 +139,26 @@ def show_graph():
         messagebox.showinfo("Info", "Pressed submit button first!")
 
 def clear_all():
+    global coefficient
+    global trigonometry
+    global power
+    global start
+    global n
+    global button_pressed
+
     my_label.destroy()
     coefficient_input.delete(0, END)
     power_input.delete(0, END)
     start_input.delete(0, END)
     n_input.delete(0, END)
     graph.get_tk_widget().pack_forget()
+    
+    coefficient = 0
+    trigonometry = None
+    power = 0
+    start = 0
+    n = 0
+    button_pressed = False
 
 coefficient_input = Entry(root)
 canvas.create_window(400, 90, window= coefficient_input)
