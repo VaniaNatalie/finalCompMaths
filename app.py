@@ -185,7 +185,7 @@ def check_taylor(coef, trigo, power, add_param):
     return tay                                
 
 # Function to create the graph
-def plot_taylor(tay, arr, start, n):
+def plot_taylor(tay, arr, start, n, add_param):
     global x
     global graph
 
@@ -221,7 +221,7 @@ def plot_taylor(tay, arr, start, n):
     # Plot the data
     ax.plot(arr, y(arr), label="Original")
     ax.plot(arr, tayl, label="Taylor")
-    # ax.set_ylim([-2,2])
+    ax.set_ylim([add_param - 2, add_param + 2])
 
     # A tk.DrawingArea
     graph = FigureCanvasTkAgg(fig, root) 
@@ -231,7 +231,7 @@ def plot_taylor(tay, arr, start, n):
 # Function to show graph
 def show_graph():  
     # Show the graph of the corresponding taylor series of the inputted trigonometric function
-    plot_taylor(check_taylor(coefficient, trigonometry, power, add_param), arr, start, n)
+    plot_taylor(check_taylor(coefficient, trigonometry, power, add_param), arr, start, n, add_param)
     # Set button2 state to disabled and button3 state to normal
     button2['state'] = DISABLED
     button3['state'] = NORMAL
@@ -284,19 +284,19 @@ choices_variable.set(user_choices[0])
 combo_box = Combobox(root, textvariable=choices_variable, values=user_choices)
 canvas.create_window(400, 110, window=combo_box)
 
-# Creta entry box for power input
+# Create entry box for power input
 power_input = Entry(root)
 canvas.create_window(400, 130, window=power_input)
 
-# Creta entry box for start input
+# Create entry box for start input
 start_input = Entry(root)
 canvas.create_window(400, 150, window=start_input)
 
-# Creta entry box for n input
+# Create entry box for n input
 n_input = Entry(root)
 canvas.create_window(400, 170, window=n_input)
 
-# Creta entry box for additional parameter input
+# Create entry box for additional parameter input
 add_param_input = Entry(root)
 canvas.create_window(400, 190, window=add_param_input)
 
